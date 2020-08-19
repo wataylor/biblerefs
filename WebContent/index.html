@@ -1,0 +1,216 @@
+<HTML xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en">
+<HEAD>
+<meta charset="UTF-8"/>
+<TITLE>
+Bible Reference
+</TITLE>
+
+<!-- index.html
+
+   Copyright (c) 2008 by Advanced Systems and Software Technologies.
+   All Rights Reserved
+
+-->
+
+<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+<script type="text/javascript" src="javascript/autosuggest.js"></script>
+<script type="text/javascript" src="javascript/bookNames.js"></script>
+<script language="Javascript">
+
+/* Note: Typing the enter key in any field of a form submits the form.
+This can be suppressed by not using a form.*/
+
+var suggest;
+
+function setSearch() {
+suggest = new AutoSuggest(document.getElementById('requestField'), bookNames);
+document.getElementById("requestField").focus();
+var viewportH = Math.floor(window.innerHeight * .7);
+elem = document.getElementById("inputCell");
+elem.style.height = viewportH;
+};
+
+function getDataToAdd(params) {
+  $.get(params,
+	function(data) {
+	  var rep = document.getElementById("inputCell");
+	  rep.innerHTML = data + rep.innerHTML;
+	  document.getElementById("requestField").focus();
+	});
+};
+
+function findPassage(elem) {
+  if (!elem) { elem = document.getElementById("requestField"); }
+  var cb = document.getElementById("wantRefs");
+  var sp = document.getElementById("wantSpan");
+  var th = document.getElementById("wantThai");
+  var gm = document.getElementById("wantGer");
+  var en = document.getElementById("wantEng");
+  var params = "getRef.jsp?passage=" + encodeURI(elem.value) + "&cr=" +
+    cb.checked + "&span=" + sp.checked
+    + "&thai=" + th.checked
+    + "&germ=" + gm.checked
+    + "&engl=" + en.checked
+    + "&lang=" + document.querySelector('input[name="lang"]:checked').value;
+  getDataToAdd(params);
+};
+
+function returned(value) {
+  var rep = document.getElementById("inputCell");
+  rep.innerHTML = value + rep.innerHTML;
+};
+
+function clearReturn() {
+  clearL();
+  var rep = document.getElementById("inputCell");
+  rep.innerHTML = "&nbsp;";
+  rep = document.getElementById("requestField");
+  rep.value="";
+  rep.focus();
+};
+
+/* The mouse clicks on a span which holds only the verse reference.
+This span is inside a span which has the text as a mouse over target,
+so its parent has the text as its target.*/
+
+function hitSpan(elem, refID, vID) {
+  var tit = elem.parentNode.title; // The text of the verse
+  var htm = elem.innerHTML; // Reference to the verse, has a space at end
+  var rep = document.getElementById("inputCell");
+  rep.innerHTML = "<P>" + tit + " <b>" + htm + "</b></p>" + rep.innerHTML;
+};
+
+function minusMe(elem, lid) {
+  var par = elem.parentNode;
+
+  if (confirm("Are you sure that you want to say that the verse \"" +
+   par.title + "\" is not related to the verse you retrieved?")) {
+    var params = "getRef.jsp?dis=" + lid;
+    getDataToAdd(params);
+  }
+};
+
+function plusMe(hit, re) {
+  var ref = re;
+  $.get('sugForm.jsp', function(data) {
+	 var elem = document.getElementById("sugContent");
+	 elem.innerHTML = data;
+	 elem = document.getElementById("sugRow");
+	 elem.style.display = "block";
+	 elem = document.getElementById("fromV");
+	 elem.value = ref;
+	 new AutoSuggest(elem, bookNames);
+	 elem = document.getElementById("toV");
+	 new AutoSuggest(elem, bookNames);
+	 elem.focus();
+       });
+};
+
+function clearL(hit) {
+  var elem = document.getElementById("sugContent");
+  elem.innerHTML = "";
+  elem = document.getElementById("sugRow");
+  elem.style.display = "none";
+}
+
+function suggestL(hit) {
+  var felem = document.getElementById("fromV");
+  var telem = document.getElementById("toV");
+  if (!felem || (felem.value.length <= 0) ||
+      !telem || (telem.value.length <= 0)) {
+    alert("Please specify both a \"from\" verse and a \"to\" verse.");
+    return;
+  }
+    var params = "suggest.jsp?fromV=" + felem.value + "&toV=" + telem.value;
+    params = encodeURI(params);
+    $.get(params, function(data) {
+	    var elem = document.getElementById("sugContent");
+	    elem.innerHTML = data;
+	  });
+};
+
+function confirmL(hit, from, to) {
+  var cb = document.getElementById("two");
+  var params = "suggest.jsp?fromV=" + from + "&toV=" + to +
+    "&do=y&bf=" + cb.checked;
+  params = encodeURI(params);
+  $.get(params, function(data) {
+	  var elem = document.getElementById("sugContent");
+	  elem.innerHTML = data;
+	});
+};
+
+</script>
+
+</HEAD>
+<BODY onLoad='setSearch()'>
+
+<a href="help.html">Help</a>&nbsp;
+<a href="about.html">About Us</a>&nbsp;
+<a href="contact.html">Contact Us</a>&nbsp;
+
+<table border="0" align="center" VALIGN="top" width="100%">
+<tr><td align="center"><h1><span class="bigger">S</span>imple
+<span class="bigger">B</span>ible
+<span class="bigger">S</span>earch</h1></td></tr>
+<tr id="sugRow" style="display: none;"><td align="left">
+<span id="sugContent"></span></td></tr>
+<tr><td align="center">
+
+<input type="radio" id="re" name="lang" value="" checked />
+<label for="re">English</label>
+<input type="radio" id="rs" name="lang" value="Spanish" />
+<label for="rs">Spanish</label>
+<input type="radio" id="rg" name="lang" value="German" />
+<label for="rg">German</label>
+<input type="radio" id="rt" name="lang" value="Thai" />
+<label for="rt">Thai</label>
+
+<input type="text" name="requestField" id="requestField" value=""
+title="Enter the book, chapter, and verse(s) for a scripture passage as in Re:20:10, then press Find or press the Enter key."
+>
+<input type="checkbox" id="wantSpan" name="wantSpan" title="Spanish in parallel">
+<label for="wantSpan">Parallel Spanish</label>
+<input type="checkbox" id="wantThai" name="wantThai" title="Thai in parallel">
+<label for="wantThai">Parallel Thai</label>
+<input type="checkbox" id="wantGer" name="wantGer" title="German in parallel">
+<label for="wantGer">Parallel German</label>
+<input type="checkbox" id="wantEng" name="wantEng" title="English in parallel">
+<label for="wantEng">Parallel English</label>
+<div id="autosuggest"><ul></ul></div>
+</td></tr>
+<tr><td align="center">
+<button type="reset" id="findBtn"  name="findBtn" class="btnBlue cursorHand"
+title="Searches for the verse or passage named in the input box as in  Ge. 1:1-4"
+onClick="javascript:findPassage()">Find Verses</button>
+
+<button type="reset" id="clearBtn" name="clearBtn" class="btnRed cursorHand"
+title="Clears the input field and the accumulated verses"
+onClick="javascript:clearReturn()">Clear</button>
+
+<input type="checkbox" id="wantRefs" name="wantRefs" title="Checking this box means that you want cross-references along with the text of the passage.  Clicking + or - in a cross-reference lets you add or subtract references.">
+Include Cross-References
+
+</td>
+</tr>
+<tr><td colspan="1" bgcolor="black" height="6"></td></tr>
+<tr><td><div id="inputCell" style="overflow: auto;" >
+</div>
+</td></tr>
+
+</table>
+
+<script src="http://www.google.com/jsapi"></script>
+<script>
+  google.load("jquery", "1")
+</script>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-5765032-1");
+pageTracker._trackPageview();
+</script>
+</BODY></HTML>
