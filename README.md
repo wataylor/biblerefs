@@ -1,4 +1,4 @@
-# A web site for generating parallel Bible passages for teaaching English
+# A web site for generating parallel Bible passages for teaching English
 
 It also generates parallel Bible passages in various languages to help missionaries teach Engilsh as a means of
 spreading the gospel.
