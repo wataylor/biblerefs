@@ -101,7 +101,11 @@ public abstract class RefLookup {
     /**/
 
     try {
-      if ( (ix = reference.indexOf(":")) < 0) {
+      ix = reference.indexOf(":");
+      if (ix < 0) {
+    	  ix = reference.lastIndexOf(".");
+      }
+      if ( ix < 0) {
 	ix = reference.length();
 	noverse = true;
       } else {
