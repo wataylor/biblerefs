@@ -12,6 +12,12 @@ import asst.biblerefs.CommandArgs;
 import asst.biblerefs.RattleForUTF8;
 import asst.dbase.DataBase;
 
+/** experimenting with reading UTF-8 from the database
+ * Do not need to add ?useUnicode=true&characterEncoding=UTF-8
+ * to the database URL.
+ * @author Money
+ * @since 2020 07
+ */
 public class TestThaiMain {
 
 	static Statement stmt;
