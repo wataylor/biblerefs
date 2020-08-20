@@ -1,30 +1,22 @@
-<!-- getRef.jsp
-
-   Copyright (c) 2008 by Advanced Systems and Software Technologies.
-   All Rights Reserved
-
--->
 <%@page import="asst.biblerefs.RefSQLLookup,
 loadsql.LoadKJVTextVerses,asst.dbase.SQLUtilities,
 java.util.List, java.util.ArrayList,
 asst.biblerefs.RattleForUTF8,
-asst.dbase.DBProp" errorPage="runError.jsp"%>
-<%!
-RefSQLLookup rsl;
+asst.dbase.DBProp" errorPage="runError.jsp"%><%
+RefSQLLookup rsl = new RefSQLLookup();
 String lang;
 String name;
 String ref;
-String passage;
-StringBuilder sb;
+String passage = null;
+StringBuilder sb = new StringBuilder();
 List<String> languages = new ArrayList<String>();
 boolean wantRef;
-%><%
-	if (rsl == null) { rsl = new RefSQLLookup(); rsl.setup(); }
-if (sb  == null) { sb  = new StringBuilder(); } else {sb.setLength(0); }
+response.setCharacterEncoding("UTF8");
+rsl.setup();
 //DBProp.PropertyConnection(LoadVerses.DATABASE_NAME);
 System.out.println("connDB null " + (asst.dbase.DataBase.connDB == null));
 // asst.dbase.DataBase.openDB("com.mysql.jdbc.Driver", "jdbc:mysql://mysql.perennitypublishing.com/Perennity", "perennity", "2indianbk");
-RattleForUTF8.rattle("after");
+// RattleForUTF8.rattle("after");
 wantRef = (( (name = request.getParameter("cr")) != null) && "true".equalsIgnoreCase(name));
 
 if (( (name = request.getParameter("dis")) != null) && (name.length() > 0)) {
@@ -38,7 +30,7 @@ if (( (name = request.getParameter("dis")) != null) && (name.length() > 0)) {
 		languages.add("Spanish");
 	}
 	if (( (name = request.getParameter("thai")) != null) && "true".equalsIgnoreCase(name)) {
-		languages.add("");
+		languages.add("Thai");
 	}
 	if (( (name = request.getParameter("germ")) != null) && "true".equalsIgnoreCase(name)) {
 		languages.add("German");

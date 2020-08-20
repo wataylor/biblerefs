@@ -1,6 +1,6 @@
 <HTML xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en">
 <HEAD>
-<meta charset="UTF-8"/>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
 <TITLE>
 Bible Reference
 </TITLE>
@@ -44,12 +44,12 @@ function findPassage(elem) {
   var cb = document.getElementById("wantRefs");
   var sp = document.getElementById("wantSpan");
   var th = document.getElementById("wantThai");
-  var gm = document.getElementById("wantGer");
+  // var gm = document.getElementById("wantGer");
   var en = document.getElementById("wantEng");
   var params = "getRef.jsp?passage=" + encodeURI(elem.value) + "&cr=" +
     cb.checked + "&span=" + sp.checked
     + "&thai=" + th.checked
-    + "&germ=" + gm.checked
+    // + "&germ=" + gm.checked
     + "&engl=" + en.checked
     + "&lang=" + document.querySelector('input[name="lang"]:checked').value;
   getDataToAdd(params);
@@ -161,8 +161,8 @@ function confirmL(hit, from, to) {
 <label for="re">English</label>
 <input type="radio" id="rs" name="lang" value="Spanish" />
 <label for="rs">Spanish</label>
-<input type="radio" id="rg" name="lang" value="German" />
-<label for="rg">German</label>
+<!--  <input type="radio" id="rg" name="lang" value="German" />
+<label for="rg">German</label> -->
 <input type="radio" id="rt" name="lang" value="Thai" />
 <label for="rt">Thai</label>
 
@@ -173,8 +173,8 @@ title="Enter the book, chapter, and verse(s) for a scripture passage as in Re:20
 <label for="wantSpan">Parallel Spanish</label>
 <input type="checkbox" id="wantThai" name="wantThai" title="Thai in parallel">
 <label for="wantThai">Parallel Thai</label>
-<input type="checkbox" id="wantGer" name="wantGer" title="German in parallel">
-<label for="wantGer">Parallel German</label>
+<!-- <input type="checkbox" id="wantGer" name="wantGer" title="German in parallel">
+<label for="wantGer">Parallel German</label> -->
 <input type="checkbox" id="wantEng" name="wantEng" title="English in parallel">
 <label for="wantEng">Parallel English</label>
 <div id="autosuggest"><ul></ul></div>
