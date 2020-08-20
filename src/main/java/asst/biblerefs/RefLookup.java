@@ -103,7 +103,7 @@ public abstract class RefLookup {
     try {
       ix = reference.indexOf(":");
       if (ix < 0) {
-    	  ix = reference.lastIndexOf(".");
+	ix = reference.lastIndexOf(".");
       }
       if ( ix < 0) {
 	ix = reference.length();
