@@ -35,6 +35,9 @@ if (( (name = request.getParameter("dis")) != null) && (name.length() > 0)) {
 	if (( (name = request.getParameter("germ")) != null) && "true".equalsIgnoreCase(name)) {
 		languages.add("German");
 	}
+	  if (( (name = request.getParameter("burm")) != null) && "true".equalsIgnoreCase(name)) {
+		    languages.add("Burmese");
+		  }
 	if (( (name = request.getParameter("engl")) != null) && "true".equalsIgnoreCase(name)) {
 		languages.add(""); // Empty string is English
 	}
