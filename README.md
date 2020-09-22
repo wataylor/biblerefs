@@ -38,4 +38,7 @@ These tables need a new column for each language.  These alter table statements 
 
 The database has been set to default to TUF8 so most of these columns should be stored in UTF-8.
 
+###Writing UTF8
 
+Add the following after the MySQL JDBC URL:
+** ?useUnicode=yes&characterEncoding=UTF-8 **
