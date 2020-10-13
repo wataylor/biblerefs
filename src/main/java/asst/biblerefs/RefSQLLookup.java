@@ -237,7 +237,7 @@ public class RefSQLLookup extends RefLookup {
     } else {
       for (i=1; i<vec.size(); i++) {
         if (wantRefs || wantSup) { sb.append(" <sup>" + (verseNumber + i) + "</sup>"); }
-	sb.append(" " + createVerseTableRow((String)vec.elementAt(i), multi, verseNumber + i));
+	sb.append(createVerseTableRow((String)vec.elementAt(i), multi, verseNumber + i));
 	if (wantRefs) { addCrefHTML(sb, id + i, langs[0]); }
       }
     }
