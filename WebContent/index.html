@@ -1,6 +1,8 @@
 <HTML xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en">
 <HEAD>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <TITLE>
 Bible Reference
 </TITLE>
@@ -15,6 +17,19 @@ Bible Reference
 <link rel="stylesheet" type="text/css" href="style.css" media="screen" />
 <script type="text/javascript" src="javascript/autosuggest.js"></script>
 <script type="text/javascript" src="javascript/bookNames.js"></script>
+<!-- jQuery (necessary for Bootstrap’s JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
+</script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="javascript/bootstrap.min.js"></script>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<style type="text/css">
+.col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-6, .col-md-8 {
+color: black;
+border: 1px solid black;
+}
+label { white-space: nowrap }
+</style>
 <script language="Javascript">
 
 /* Note: Typing the enter key in any field of a form submits the form.
@@ -32,11 +47,11 @@ elem.style.height = viewportH;
 
 function getDataToAdd(params) {
   $.get(params,
-	function(data) {
-	  var rep = document.getElementById("inputCell");
-	  rep.innerHTML = data + rep.innerHTML;
-	  document.getElementById("requestField").focus();
-	});
+  function(data) {
+    var rep = document.getElementById("inputCell");
+    rep.innerHTML = data + rep.innerHTML;
+    document.getElementById("requestField").focus();
+  });
 };
 
 function findPassage(elem) {
@@ -95,16 +110,16 @@ function minusMe(elem, lid) {
 function plusMe(hit, re) {
   var ref = re;
   $.get('sugForm.jsp', function(data) {
-	 var elem = document.getElementById("sugContent");
-	 elem.innerHTML = data;
-	 elem = document.getElementById("sugRow");
-	 elem.style.display = "block";
-	 elem = document.getElementById("fromV");
-	 elem.value = ref;
-	 new AutoSuggest(elem, bookNames);
-	 elem = document.getElementById("toV");
-	 new AutoSuggest(elem, bookNames);
-	 elem.focus();
+   var elem = document.getElementById("sugContent");
+   elem.innerHTML = data;
+   elem = document.getElementById("sugRow");
+   elem.style.display = "block";
+   elem = document.getElementById("fromV");
+   elem.value = ref;
+   new AutoSuggest(elem, bookNames);
+   elem = document.getElementById("toV");
+   new AutoSuggest(elem, bookNames);
+   elem.focus();
        });
 };
 
@@ -126,9 +141,9 @@ function suggestL(hit) {
     var params = "suggest.jsp?fromV=" + felem.value + "&toV=" + telem.value;
     params = encodeURI(params);
     $.get(params, function(data) {
-	    var elem = document.getElementById("sugContent");
-	    elem.innerHTML = data;
-	  });
+      var elem = document.getElementById("sugContent");
+      elem.innerHTML = data;
+    });
 };
 
 function confirmL(hit, from, to) {
@@ -137,9 +152,9 @@ function confirmL(hit, from, to) {
     "&do=y&bf=" + cb.checked;
   params = encodeURI(params);
   $.get(params, function(data) {
-	  var elem = document.getElementById("sugContent");
-	  elem.innerHTML = data;
-	});
+    var elem = document.getElementById("sugContent");
+    elem.innerHTML = data;
+  });
 };
 
 </script>
@@ -151,14 +166,17 @@ function confirmL(hit, from, to) {
 <a href="about.html">About Us</a>&nbsp;
 <a href="contact.html">Contact Us</a>&nbsp;
 
-<table border="0" align="center" VALIGN="top" width="100%">
-<tr><td align="center"><h1><span class="bigger">S</span>imple
+<h1 align="center"><span class="bigger">S</span>imple
 <span class="bigger">B</span>ible
-<span class="bigger">S</span>earch</h1></td></tr>
-<tr id="sugRow" style="display: none;"><td align="left">
-<span id="sugContent"></span></td></tr>
-<tr><td align="center">
+<span class="bigger">S</span>earch</h1>
 
+<div id="sugRow" style="display: none; text-align: center; width: 100%;">
+<span id="sugContent" style="">sugcontent</span></div>
+
+<div class="container">
+<div class="row">
+<div class="col-md-4">
+First language<br>
 <input type="radio" id="re" name="lang" value="" checked />
 <label for="re">English</label>
 <input type="radio" id="rs" name="lang" value="Spanish" />
@@ -169,48 +187,45 @@ function confirmL(hit, from, to) {
 <label for="rt">Thai</label>
 <input type="radio" id="br" name="lang" value="Burmese" />
 <label for="br">Burmese</label>
-
+</div>
+<div class="col-md-4">
 <input type="text" name="requestField" id="requestField" value=""
-title="Enter the book, chapter, and verse(s) for a scripture passage as in Re:20:10, then press Find or press the Enter key."
->
-<input type="checkbox" id="wantSpan" name="wantSpan" title="Spanish in parallel">
-<label for="wantSpan">Parallel Spanish</label>
-<input type="checkbox" id="wantThai" name="wantThai" title="Thai in parallel">
-<label for="wantThai">Parallel Thai</label>
-<!-- <input type="checkbox" id="wantGer" name="wantGer" title="German in parallel">
-<label for="wantGer">Parallel German</label> -->
-<input type="checkbox" id="wantBurm" name="wantThai" title="Burmese in parallel">
-<label for="wantBurm">Parallel Burmese</label>
-<input type="checkbox" id="wantEng" name="wantEng" title="English in parallel">
-<label for="wantEng">Parallel English</label>
+title="Enter the book, chapter, and verse(s) for a scripture passage as in Re:20:10, then press Find or press the Enter key.">
 <div id="autosuggest"><ul></ul></div>
-</td></tr>
-<tr><td align="center">
 <button type="reset" id="findBtn"  name="findBtn" class="btnBlue cursorHand"
 title="Searches for the verse or passage named in the input box as in  Ge. 1:1-4"
 onClick="javascript:findPassage()">Find Verses</button>
-
 <button type="reset" id="clearBtn" name="clearBtn" class="btnRed cursorHand"
 title="Clears the input field and the accumulated verses"
-onClick="javascript:clearReturn()">Clear</button>
-
+onClick="javascript:clearReturn()">Clear</button><br>
 <input type="checkbox" id="wantRefs" name="wantRefs" title="Checking this box means that you want cross-references along with the text of the passage.  Clicking + or - in a cross-reference lets you add or subtract references.">
-Include Cross-References
-
-</td>
-</tr>
+Include&nbsp;Cross-References
+</div>
+<div class="col-md-4">
+Parallel language(s)<br>
+<input type="checkbox" id="wantSpan" name="wantSpan" title="Spanish in parallel">
+<label for="wantSpan">Spanish</label>
+<input type="checkbox" id="wantThai" name="wantThai" title="Thai in parallel">
+<label for="wantThai">Thai</label>
+<!-- <input type="checkbox" id="wantGer" name="wantGer" title="German in parallel">
+<label for="wantGer">German</label> -->
+<input type="checkbox" id="wantBurm" name="wantThai" title="Burmese in parallel">
+<label for="wantBurm">Burmese</label>
+<input type="checkbox" id="wantEng" name="wantEng" title="English in parallel">
+<label for="wantEng">English</label>
+</div>
+</div>
+</div>
+<table border="0" align="center" VALIGN="top" width="100%">
 <tr><td colspan="1" bgcolor="black" height="6"></td></tr>
 <tr><td><div id="inputCell" style="overflow: auto;" >
 </div>
 </td></tr>
-
 </table>
-
 <script src="http://www.google.com/jsapi"></script>
 <script>
   google.load("jquery", "1")
 </script>
-
 <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
 document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
