@@ -259,7 +259,7 @@ public class RefSQLLookup extends RefLookup {
 		  StringBuilder sb = new StringBuilder();
 		  String[]vs = element.split("\\|");
 		  for (String v : vs) {
-			  sb.append("<td><sup>" + verseNumber + "</sup>" + v + "</td>");
+			  sb.append("<td style=\"vertical-align:top\"><sup>" + verseNumber + "</sup>" + v + "</td>");
 		  }
 		  return ("<tr>" + sb.toString() + "</tr>\n");
 	  }
