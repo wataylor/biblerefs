@@ -89,7 +89,8 @@ public class RefSQLLookup extends RefLookup {
 				      bookName + "'  or Abbreviation='" +
 				      bookName + "'  or Book='" +
 				      bookName + ".' or Abbreviation='" +
-				      bookName + ".'");
+				      bookName + ".' or Code='" +
+				      bookName +"'");
     if (vec.size() <= 0) {
       return 0;
     }
